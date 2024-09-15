@@ -1,2 +1,3 @@
-# Typing-test
-Typing test made in react
+# Typing-speed-test
+
+Typing speed test made in react

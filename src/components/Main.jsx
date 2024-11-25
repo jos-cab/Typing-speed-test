@@ -1,14 +1,17 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import "./main.css";
 
-function Stats() {
-	const [timer, setTimer] = useState(30);
+function Stats({ testTime, time, setTime }) {
 	const wpm = useRef(0);
 	const accuracy = useRef(100);
 
+	useEffect(() => {
+		setTime(testTime.current);
+	}, []);
+
 	return (
 		<div className="stats container">
-			<span className="time">{timer}</span>
+			<span className="time">{time}</span>
 			<span className="wpm">{wpm.current}</span>
 			<span className="accuracy">{accuracy.current}%</span>
 		</div>
@@ -108,10 +111,10 @@ function Words() {
 	);
 }
 
-export default function Main() {
+export default function Main({ testTime, time, setTime }) {
 	return (
 		<main>
-			<Stats />
+			<Stats testTime={testTime} time={time} setTime={setTime} />
 			<Words />
 		</main>
 	);

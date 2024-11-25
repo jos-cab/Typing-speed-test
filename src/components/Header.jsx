@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import "./Header.css";
 
 function SettingsIcon({ settingsOpened, setSettingsOpened }) {
@@ -27,16 +27,24 @@ function SettingsIcon({ settingsOpened, setSettingsOpened }) {
 	);
 }
 
-function TestTimeButton(time, index, buttonListRef, activeBtn) {
+function TestTimeButton(
+	time,
+	index,
+	buttonListRef,
+	activeBtn,
+	testTime,
+	setTime
+) {
 	const handleClick = (index) => {
 		const buttonListNode = buttonListRef.current;
 		const buttonList = buttonListNode.querySelectorAll("button");
 
-		if (activeBtn.current != null)
-			activeBtn.current.classList.toggle("active-btn");
+		buttonList[activeBtn.current].classList.remove("active-btn");
+		activeBtn.current = index;
+		buttonList[activeBtn.current].classList.add("active-btn");
 
-		activeBtn.current = buttonList[index];
-		activeBtn.current.classList.toggle("active-btn");
+		testTime.current = buttonList[activeBtn.current].innerHTML;
+		setTime(testTime.current);
 	};
 
 	return (
@@ -50,14 +58,28 @@ function TestTimeButton(time, index, buttonListRef, activeBtn) {
 	);
 }
 
-export default function Header({ settingsOpened, setSettingsOpened }) {
+export default function Header({
+	settingsOpened,
+	setSettingsOpened,
+	testTime,
+	setTime,
+}) {
 	const testTimes = [15, 30, 60, 120]; // Do not create two identical
 	const buttonListRef = useRef(null);
-	const activeBtn = useRef(null);
+	const activeBtn = useRef(1);
 
 	const testTimeButtons = testTimes.map((time, index) =>
-		TestTimeButton(time, index, buttonListRef, activeBtn)
+		TestTimeButton(time, index, buttonListRef, activeBtn, testTime, setTime)
 	);
+
+	useEffect(() => {
+		const buttons = buttonListRef.current.querySelectorAll("button");
+		if (buttons[activeBtn.current]) {
+			buttons[activeBtn.current].classList.add("active-btn");
+		}
+		testTime.current = testTimes[activeBtn.current];
+		setTime(testTime.current);
+	}, []);
 
 	return (
 		<>
@@ -70,7 +92,7 @@ export default function Header({ settingsOpened, setSettingsOpened }) {
 					/>
 				</div>
 
-				<div className="container button-list" ref={buttonListRef}>
+				<div className="button-list container" ref={buttonListRef}>
 					{testTimeButtons}
 				</div>
 			</header>

@@ -1,0 +1,32 @@
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	padding: 1em 2em;
+}
+
+.main-title {
+	color: var(--col-8);
+	white-space: nowrap;
+}
+
+.button-list {
+	gap: 1em;
+}
+
+.test-time-btn {
+	width: 48px;
+	height: 24px;
+	background-color: var(--col-5);
+	color: var(--col-1);
+	font-weight: bold;
+	border: 0;
+	border-radius: 999px;
+	padding: 4px 12px;
+	cursor: pointer;
+}
+
+.active-btn {
+	background-color: var(--col-4);
+}

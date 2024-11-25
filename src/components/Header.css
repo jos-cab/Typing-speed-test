@@ -6,9 +6,22 @@ header {
 	padding: 1em 2em;
 }
 
+.home {
+	gap: 1em;
+}
+
 .main-title {
 	color: var(--col-8);
 	white-space: nowrap;
+}
+
+.settings-icon {
+	font-size: 1.75em;
+	cursor: pointer;
+}
+
+.settings-icon g path {
+	fill: var(--col-8) !important;
 }
 
 .button-list {

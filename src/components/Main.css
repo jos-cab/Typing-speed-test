@@ -1,5 +1,8 @@
 main {
 	margin-top: 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .stats {
@@ -7,18 +10,19 @@ main {
 	gap: 1.5em;
 	font-size: 2em;
 	width: fit-content;
-	margin-left: 10%;
-	margin-bottom: 50px;
+	align-self: baseline;
+	margin: 0 0 50px 3em;
 }
 
 .typing-area {
-	background-color: var(--col-1);
+	position: relative;
+	background-color: transparent;
 	color: red;
-	width: 85%;
-	height: 200px;
+	width: 100%;
 	resize: none;
 	border: 1px solid red;
 	cursor: pointer;
+	z-index: 1;
 }
 
 .typing-area:focus {
@@ -28,4 +32,29 @@ main {
 
 .typing-area::selection {
 	background-color: black;
+}
+
+.characters {
+	position: absolute;
+	color: var(--col-8);
+	z-index: 0;
+}
+
+.words,
+.characters {
+	width: 85%;
+}
+
+.typing-area,
+.characters {
+	font-size: 1.25rem;
+	height: 200px;
+}
+
+.incorrect-character {
+	color: var(--col-2);
+}
+
+.correct-character {
+	color: var(--col-3);
 }

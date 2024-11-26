@@ -4,5 +4,5 @@ import react from "@vitejs/plugin-react";
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [react()],
-	base: "https://github.com/jos-cabrera/Typing-speed-test/",
+	base: "https://jos-cabrera.github.io/Typing-speed-test/",
 });

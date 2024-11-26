@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./main.css";
 
 function Stats({ testTime, time, setTime }) {
@@ -19,94 +19,58 @@ function Stats({ testTime, time, setTime }) {
 }
 
 function Words() {
-	const typingArea = useRef(null);
-
+	const [typedWords, setTypedWords] = useState("");
 	const characterListRef = useRef(null);
 
 	const phrase =
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet purus et turpis placerat venenatis. Nulla facilisi. Curabitur vehicula, tortor id laoreet tempus, arcu justo euismod urna, id mollis erat odio in dui. Integer vel nulla at elit fringilla bibendum. Fusce cursus nisi ut risus gravida.";
 
-	const characters = phrase.split("").map((char, index) => {
-		return <span key={index}>{char}</span>;
-	});
+	const characters = useMemo(
+		() =>
+			phrase.split("").map((_, index) => (
+				<span
+					key={index}
+					className={
+						typedWords[index]
+							? typedWords[index] === phrase[index]
+								? "correct-character"
+								: "incorrect-character"
+							: ""
+					}
+				>
+					{phrase[index] !== typedWords[index] && typedWords[index]
+						? typedWords[index]
+						: phrase[index]}
+				</span>
+			)),
+		[typedWords, phrase]
+	);
 
 	const handleInput = (e) => {
-		const modifiers = [
-			"Control",
-			"Alt",
-			"Shift",
-			"ArrowLeft",
-			"ArrowRight",
-			"ArrowUp",
-			"ArrowDown",
-		];
-		const end = typingArea.current.selectionEnd;
+		const newTypedWords = e.target.value;
 
 		if (e.key === "Tab") {
 			e.preventDefault();
-
-			const start = typingArea.current.selectionStart;
-
-			const updatedValue =
-				typingArea.current.value.slice(0, start) +
-				"\t" +
-				typingArea.current.value.slice(start, end) +
-				typingArea.current.value.slice(end);
-
-			typingArea.current.value = updatedValue;
-
-			typingArea.current.selectionStart =
-				typingArea.current.selectionEnd = start + 1;
+			setTypedWords((prev) => prev + "\t");
+			return;
 		}
 
-		if (
-			typingArea.current.value.length < phrase.length &&
-			!modifiers.includes(e.key)
-		) {
-			const characterList =
-				characterListRef.current.querySelectorAll("span");
-
-			phrase[end] == e.key
-				? characterList[end].classList.toggle("correct-character")
-				: characterList[end].classList.toggle("incorrect-character");
-		}
-
-		// TODO: fix control + backspace
-		if (e.key == "Backspace" && !modifiers.includes(e.key)) {
-			const characterList =
-				characterListRef.current.querySelectorAll("span");
-
-			characterList.forEach((element, index) => {
-				const charTyped =
-					index < end - 1 ? typingArea.current.value[index] : null;
-
-				if (charTyped) {
-					charTyped == element
-						? element.classList.add("correct-character")
-						: element.classList.add("incorrect-character");
-				} else {
-					characterList[index].classList.remove(
-						"correct-character",
-						"incorrect-character"
-					);
-				}
-			});
-		}
+		setTypedWords(newTypedWords);
 	};
 
 	return (
 		<div className="words">
-			<div ref={characterListRef} className="characters">
-				{characters}
-			</div>
-
 			<textarea
-				ref={typingArea}
-				onKeyDown={(e) => handleInput(e)}
+				onChange={handleInput}
 				className="typing-area"
 				name="typing-area"
 				spellCheck={false}
-			></textarea>
+				value={typedWords}
+			/>
+
+			<div ref={characterListRef} className="characters">
+				{characters}
+			</div>
 		</div>
 	);
 }

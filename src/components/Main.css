@@ -15,7 +15,7 @@ main {
 }
 
 .typing-area {
-	position: relative;
+	position: absolute;
 	background-color: transparent;
 	color: transparent;
 	width: 100%;
@@ -25,9 +25,21 @@ main {
 	z-index: 1;
 }
 
+.typing-area {
+	caret-color: var(--col-8);
+}
+
 .typing-area:focus {
 	outline: none;
 	cursor: default;
+}
+
+.typing-area:focus + .characters {
+	filter: none;
+}
+
+.words:focus-within::after {
+	display: none;
 }
 
 .typing-area::selection {
@@ -35,13 +47,27 @@ main {
 }
 
 .characters {
-	position: absolute;
+	position: relative;
 	color: var(--col-8);
 	z-index: 0;
+	filter: blur(5px);
+}
+
+.words::after {
+	content: "Click to start typing";
+	color: var(--col-6);
+	font-weight: bold;
+	font-size: 1.5em;
+	display: block;
+	position: absolute;
+	user-select: none;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 .words,
-.characters {
+.typing-area {
 	width: 85%;
 }
 

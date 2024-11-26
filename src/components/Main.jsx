@@ -22,8 +22,7 @@ function Words() {
 	const [typedWords, setTypedWords] = useState("");
 	const characterListRef = useRef(null);
 
-	const phrase =
-		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet purus et turpis placerat venenatis. Nulla facilisi. Curabitur vehicula, tortor id laoreet tempus, arcu justo euismod urna, id mollis erat odio in dui. Integer vel nulla at elit fringilla bibendum. Fusce cursus nisi ut risus gravida.";
+	const phrase = "The quick brown fox jumps over the lazy dog.";
 
 	const characters = useMemo(
 		() =>
@@ -55,7 +54,7 @@ function Words() {
 			return;
 		}
 
-		setTypedWords(newTypedWords);
+		if (newTypedWords.length <= phrase.length) setTypedWords(newTypedWords);
 	};
 
 	return (
@@ -65,10 +64,17 @@ function Words() {
 				className="typing-area"
 				name="typing-area"
 				spellCheck={false}
+				onCut={(e) => e.preventDefault()}
+				onCopy={(e) => e.preventDefault()}
+				onPaste={(e) => e.preventDefault()}
 				value={typedWords}
 			/>
 
-			<div ref={characterListRef} className="characters">
+			<div
+				ref={characterListRef}
+				onCopy={(e) => e.preventDefault()}
+				className="characters"
+			>
 				{characters}
 			</div>
 		</div>

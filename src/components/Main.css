@@ -12,6 +12,7 @@ main {
 	width: fit-content;
 	align-self: baseline;
 	margin: 0 0 50px 3em;
+	user-select: none;
 }
 
 .typing-area {
@@ -51,6 +52,7 @@ main {
 	color: var(--col-8);
 	z-index: 0;
 	filter: blur(5px);
+	user-select: none;
 }
 
 .words::after {

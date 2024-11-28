@@ -1,0 +1,95 @@
+main {
+	margin-top: 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 2em;
+
+	& > * {
+		width: 100%;
+	}
+}
+
+.stats {
+	color: $color-8;
+	gap: 1.5em;
+	font-size: 2em;
+	user-select: none;
+	justify-content: center;
+	margin-bottom: 30px;
+}
+
+.typing-area {
+	position: absolute;
+	background-color: transparent;
+	color: transparent;
+	resize: none;
+	border: 0;
+	cursor: pointer;
+	z-index: 1;
+	white-space: normal;
+	word-break: break-word;
+	overflow-wrap: break-word;
+}
+
+.typing-area {
+	caret-color: $color-8;
+
+	&:focus {
+		outline: none;
+		cursor: default;
+	}
+
+	&:focus + .characters {
+		filter: none;
+	}
+
+	&::selection {
+		background-color: transparent;
+	}
+}
+
+.words {
+	position: relative;
+
+	&:focus-within::after {
+		display: none;
+	}
+
+	&::after {
+		content: "Tap to start typing";
+		color: $color-6;
+		font-weight: bold;
+		font-size: 1.5em;
+		display: block;
+		position: absolute;
+		user-select: none;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 100%;
+		text-align: center;
+	}
+}
+
+.characters {
+	color: $color-8;
+	z-index: 0;
+	filter: blur(5px);
+	user-select: none;
+}
+
+.typing-area,
+.characters {
+	width: 100%;
+	font-size: 1.25rem;
+	height: 200px;
+}
+
+.incorrect-character {
+	color: $color-2;
+}
+
+.correct-character {
+	color: $color-3;
+}

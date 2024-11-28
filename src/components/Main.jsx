@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import "./main.css";
 
 function Stats({ testTime, time, setTime }) {
 	const wpm = useRef(0);
@@ -58,7 +57,7 @@ function Words() {
 	};
 
 	return (
-		<div className="words">
+		<div className="words container-column">
 			<textarea
 				onChange={handleInput}
 				className="typing-area"
@@ -83,7 +82,7 @@ function Words() {
 
 export default function Main({ testTime, time, setTime }) {
 	return (
-		<main>
+		<main className="container-column">
 			<Stats testTime={testTime} time={time} setTime={setTime} />
 			<Words />
 		</main>

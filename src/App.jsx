@@ -1,5 +1,3 @@
-import "./App.css";
-import "./themes/onedark.css";
 import Header from "./components/Header";
 import Settings from "./components/Settings";
 import Main from "./components/Main";

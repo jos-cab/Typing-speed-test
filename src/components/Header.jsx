@@ -1,5 +1,4 @@
 import { useRef, useEffect } from "react";
-import "./Header.css";
 
 function SettingsIcon({ settingsOpened, setSettingsOpened }) {
 	const handleClick = () => {
@@ -83,7 +82,7 @@ export default function Header({
 
 	return (
 		<>
-			<header>
+			<header className="container">
 				<div className="home container">
 					<h1 className="main-title">Typing test</h1>
 					<SettingsIcon

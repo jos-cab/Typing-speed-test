@@ -1,5 +1,5 @@
 .settings {
-	background-color: var(--col-1);
+	background-color: $color-1;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -13,7 +13,7 @@
 
 .menu {
 	flex-direction: column;
-	background-color: var(--col-5);
+	background-color: $color-5;
 	width: 500px;
 	height: 600px;
 	padding: 2.5em;
@@ -23,17 +23,17 @@
 
 .options {
 	width: 100%;
-}
 
-.option {
-	width: 100%;
-	justify-content: space-between;
+	& > * {
+		width: 100%;
+		justify-content: space-between;
+	}
 }
 
 .close-btn {
-	color: var(--col-1);
-	background-color: var(--col-3);
-	border: 2px solid var(--col-1);
+	color: $color-1;
+	background-color: $color-3;
+	border: 2px solid $color-1;
 	border-radius: 7px;
 	font-size: 1em;
 	text-transform: uppercase;

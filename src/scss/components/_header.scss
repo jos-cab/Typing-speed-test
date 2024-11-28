@@ -1,8 +1,5 @@
 header {
-	display: flex;
 	justify-content: space-between;
-	align-items: center;
-	flex-wrap: wrap;
 	padding: 1em 2em;
 }
 
@@ -11,7 +8,7 @@ header {
 }
 
 .main-title {
-	color: var(--col-8);
+	color: $color-8;
 	white-space: nowrap;
 	user-select: none;
 }
@@ -19,10 +16,10 @@ header {
 .settings-icon {
 	font-size: 1.75em;
 	cursor: pointer;
-}
 
-.settings-icon g path {
-	fill: var(--col-8) !important;
+	& g path {
+		fill: $color-8 !important;
+	}
 }
 
 .button-list {
@@ -32,8 +29,8 @@ header {
 .test-time-btn {
 	width: 48px;
 	height: 24px;
-	background-color: var(--col-5);
-	color: var(--col-1);
+	background-color: $color-5;
+	color: $color-1;
 	font-weight: bold;
 	border: 0;
 	border-radius: 999px;
@@ -43,5 +40,5 @@ header {
 }
 
 .active-btn {
-	background-color: var(--col-4);
+	background-color: $color-4;
 }

@@ -1,5 +1,3 @@
-import "./Settings.css";
-
 export default function Settings({ settingsOpened, setSettingsOpened }) {
 	const handleClick = () => {
 		if (settingsOpened) {
@@ -11,14 +9,14 @@ export default function Settings({ settingsOpened, setSettingsOpened }) {
 		<div className="settings">
 			<div className="menu container">
 				<div className="options">
-					<div className="option container">
+					<div className="container">
 						<label htmlFor="color-theme">Color theme</label>
 						<select name="color-theme" id="color-theme">
 							<option value="onedark">OneDark</option>
 							<option value="dracula">Dracula</option>
 						</select>
 					</div>
-					<div className="option container">
+					<div className="container">
 						<label htmlFor="language">Language</label>
 						<select name="language" id="language">
 							<option value="en">en</option>

@@ -1,0 +1,16 @@
+@media (min-width: $breakpoint-medium) {
+	header {
+		flex-direction: row;
+	}
+
+	.stats {
+		padding-left: 3em;
+		justify-content: flex-start;
+	}
+
+	.words {
+		&::after {
+			content: "Click to start typing";
+		}
+	}
+}

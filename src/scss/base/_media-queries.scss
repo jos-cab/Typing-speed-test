@@ -1,8 +1,12 @@
-@use "../abstracts/variables";
+@use "../abstracts/variables" as *;
 
-@media (min-width: variables.$breakpoint-medium) {
+@media (min-width: $breakpoint-medium) {
 	header {
-		flex-direction: row;
+		flex-direction: row !important;
+	}
+
+	.home {
+		margin-bottom: 0;
 	}
 
 	.stats {
@@ -13,6 +17,15 @@
 	.words {
 		&::after {
 			content: "Click to start typing";
+		}
+	}
+}
+
+@media (min-width: $breakpoint-large) {
+	#root {
+		& > * {
+			margin-left: auto;
+			margin-right: auto;
 		}
 	}
 }

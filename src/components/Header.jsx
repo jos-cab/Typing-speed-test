@@ -82,7 +82,7 @@ export default function Header({
 
 	return (
 		<>
-			<header className="container">
+			<header className="container-column">
 				<div className="home container">
 					<h1 className="main-title">Typing test</h1>
 					<SettingsIcon

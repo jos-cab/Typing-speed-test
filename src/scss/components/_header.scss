@@ -1,17 +1,19 @@
-@use "../themes/onedark";
+@use "../themes/onedark" as *;
+@use "../abstracts/variables" as *;
 
 header {
 	justify-content: space-between;
 	padding: 1em 2em;
+	max-width: $breakpoint-large;
 }
 
 .home {
 	gap: 1em;
+	margin-bottom: 1em;
 }
 
 .main-title {
-	color: onedark.$color-8;
-	white-space: nowrap;
+	color: $color-8;
 	user-select: none;
 }
 
@@ -20,7 +22,7 @@ header {
 	cursor: pointer;
 
 	& g path {
-		fill: onedark.$color-8 !important;
+		fill: $color-8 !important;
 	}
 }
 
@@ -31,8 +33,8 @@ header {
 .test-time-btn {
 	width: 48px;
 	height: 24px;
-	background-color: onedark.$color-5;
-	color: onedark.$color-1;
+	background-color: $color-5;
+	color: $color-1;
 	font-weight: bold;
 	border: 0;
 	border-radius: 999px;
@@ -42,5 +44,5 @@ header {
 }
 
 .active-btn {
-	background-color: onedark.$color-4;
+	background-color: $color-4;
 }

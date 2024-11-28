@@ -1,7 +1,7 @@
-@use "../themes/onedark";
+@use "../themes/onedark" as *;
 
 .settings {
-	background-color: onedark.$color-1;
+	background-color: $color-1;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -15,7 +15,7 @@
 
 .menu {
 	flex-direction: column;
-	background-color: onedark.$color-5;
+	background-color: $color-5;
 	width: 500px;
 	height: 600px;
 	padding: 2.5em;
@@ -33,9 +33,9 @@
 }
 
 .close-btn {
-	color: onedark.$color-1;
-	background-color: onedark.$color-3;
-	border: 2px solid onedark.$color-1;
+	color: $color-1;
+	background-color: $color-3;
+	border: 2px solid $color-1;
 	border-radius: 7px;
 	font-size: 1em;
 	text-transform: uppercase;

@@ -1,11 +1,7 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
-function SettingsIcon({ settingsOpened, setSettingsOpened }) {
-	const handleClick = () => {
-		if (!settingsOpened) {
-			setSettingsOpened(true);
-		}
-	};
+function SettingsIcon({ isSettingsOpen, setIsSettingsOpen }) {
+	const handleClick = () => setIsSettingsOpen((prev) => !prev);
 
 	return (
 		<svg
@@ -26,75 +22,68 @@ function SettingsIcon({ settingsOpened, setSettingsOpened }) {
 	);
 }
 
-function TestTimeButton(
-	time,
+function TestTimeButton({
+	duration,
 	index,
-	buttonListRef,
-	activeBtn,
-	testTime,
-	setTime
-) {
-	const handleClick = (index) => {
-		const buttonListNode = buttonListRef.current;
-		const buttonList = buttonListNode.querySelectorAll("button");
-
-		buttonList[activeBtn.current].classList.remove("active-btn");
-		activeBtn.current = index;
-		buttonList[activeBtn.current].classList.add("active-btn");
-
-		testTime.current = buttonList[activeBtn.current].innerHTML;
-		setTime(testTime.current);
+	selectedButtonIndex,
+	setSelectedButtonIndex,
+	setTime,
+}) {
+	const handleClick = () => {
+		setSelectedButtonIndex(index);
+		setTime(duration);
 	};
 
 	return (
 		<button
-			onClick={() => handleClick(index)}
-			key={time}
-			className="test-time-btn"
+			onClick={handleClick}
+			className={`test-time-btn ${
+				selectedButtonIndex === index ? "active-btn" : ""
+			}`}
 		>
-			{time}
+			{duration}
 		</button>
 	);
 }
 
-export default function Header({
+function Header({
 	settingsOpened,
 	setSettingsOpened,
-	testTime,
+	time,
 	setTime,
+	currentTime,
+	setCurrentTime,
 }) {
-	const testTimes = [15, 30, 60, 120]; // Do not create two identical
-	const buttonListRef = useRef(null);
-	const activeBtn = useRef(1);
-
-	const testTimeButtons = testTimes.map((time, index) =>
-		TestTimeButton(time, index, buttonListRef, activeBtn, testTime, setTime)
-	);
+	const [selectedButtonIndex, setSelectedButtonIndex] = useState(1);
 
 	useEffect(() => {
-		const buttons = buttonListRef.current.querySelectorAll("button");
-		if (buttons[activeBtn.current]) {
-			buttons[activeBtn.current].classList.add("active-btn");
-		}
-		testTime.current = testTimes[activeBtn.current];
-		setTime(testTime.current);
-	}, []);
+		setTime([15, 30, 60, 120][selectedButtonIndex]);
+	}, [selectedButtonIndex]);
 
 	return (
-		<>
-			<header className="container-column">
-				<div className="home container">
-					<h1 className="main-title">Typing test</h1>
-					<SettingsIcon
-						settingsOpened={settingsOpened}
-						setSettingsOpened={setSettingsOpened}
-					/>
-				</div>
+		<header className="container-column">
+			<div className="home container">
+				<h1 className="main-title">Typing test</h1>
+				<SettingsIcon
+					isSettingsOpen={settingsOpened}
+					setIsSettingsOpen={setSettingsOpened}
+				/>
+			</div>
 
-				<div className="button-list container" ref={buttonListRef}>
-					{testTimeButtons}
-				</div>
-			</header>
-		</>
+			<div className="button-list container">
+				{[15, 30, 60, 120].map((duration, index) => (
+					<TestTimeButton
+						key={duration}
+						duration={duration}
+						index={index}
+						selectedButtonIndex={selectedButtonIndex}
+						setSelectedButtonIndex={setSelectedButtonIndex}
+						setTime={setTime}
+					/>
+				))}
+			</div>
+		</header>
 	);
 }
+
+export default Header;

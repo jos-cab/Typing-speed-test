@@ -1,22 +1,29 @@
 import Header from "./components/Header";
-import Settings from "./components/Settings";
+//import SettingsComp from "./components/Settings";
 import Main from "./components/Main";
-import { useState, useRef } from "react";
+import { useState } from "react";
+
 function App() {
 	const [settingsOpened, setSettingsOpened] = useState(false);
 	const [time, setTime] = useState(null);
-	const testTime = useRef(null);
+	const [currentTime, setCurrentTime] = useState(null);
 
 	return (
 		<>
 			<Header
 				settingsOpened={settingsOpened}
 				setSettingsOpened={setSettingsOpened}
-				testTime={testTime}
 				time={time}
 				setTime={setTime}
+				currentTime={currentTime}
+				setCurrentTime={setCurrentTime}
 			/>
-			<Main testTime={testTime} time={time} setTime={setTime} />
+			<Main
+				time={time}
+				setTime={setTime}
+				currentTime={currentTime}
+				setCurrentTime={setCurrentTime}
+			/>
 			{/* {settingsOpened && (
 				<Settings
 					settingsOpened={settingsOpened}

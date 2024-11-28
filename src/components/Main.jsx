@@ -1,27 +1,36 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 
-function Stats({ testTime, time, setTime }) {
-	const wpm = useRef(0);
-	const accuracy = useRef(100);
+function Stats({ time, setTime, currentTime, setCurrentTime }) {
+	const [accuracy, setAccuracy] = useState(100);
+	const [wordsPerMinute, setWordsPerMinute] = useState(0);
 
 	useEffect(() => {
-		setTime(testTime.current);
-	}, []);
+		const interval = setInterval(() => {
+			if (currentTime > 0) {
+				setCurrentTime((prev) => prev - 1);
+			} else {
+				clearInterval(interval);
+			}
+		}, 1000);
+
+		return () => clearInterval(interval);
+	}, [currentTime]);
 
 	return (
 		<div className="stats container">
-			<span className="time">{time}</span>
-			<span className="wpm">{wpm.current}</span>
-			<span className="accuracy">{accuracy.current}%</span>
+			<span className="time">{currentTime}</span>
+			<span className="words-per-minute">{wordsPerMinute}</span>
+			<span className="accuracy">{accuracy}%</span>
 		</div>
 	);
 }
 
 function Words() {
-	const [typedWords, setTypedWords] = useState("");
+	const [typedText, setTypedText] = useState("");
 	const characterListRef = useRef(null);
 
-	const phrase = "The quick brown fox jumps over the lazy dog.";
+	const phrase =
+		"The quick brown fox jumps over the lazy dog. The five boxing wizards jump quickly.";
 
 	const characters = useMemo(
 		() =>
@@ -29,31 +38,33 @@ function Words() {
 				<span
 					key={index}
 					className={
-						typedWords[index]
-							? typedWords[index] === phrase[index]
+						typedText[index]
+							? typedText[index] === phrase[index]
 								? "correct-character"
 								: "incorrect-character"
 							: ""
 					}
 				>
-					{phrase[index] !== typedWords[index] && typedWords[index]
-						? typedWords[index]
+					{phrase[index] === " " &&
+					typedText[index] !== phrase[index] &&
+					typedText[index]
+						? "_"
 						: phrase[index]}
 				</span>
 			)),
-		[typedWords, phrase]
+		[typedText, phrase]
 	);
 
-	const handleInput = (e) => {
-		const newTypedWords = e.target.value;
+	const handleInput = (event) => {
+		const newText = event.target.value;
 
-		if (e.key === "Tab") {
-			e.preventDefault();
-			setTypedWords((prev) => prev + "\t");
+		if (event.key === "Tab") {
+			event.preventDefault();
+			setTypedText((prev) => prev + "\t");
 			return;
 		}
 
-		if (newTypedWords.length <= phrase.length) setTypedWords(newTypedWords);
+		if (newText.length <= phrase.length) setTypedText(newText);
 	};
 
 	return (
@@ -66,7 +77,7 @@ function Words() {
 				onCut={(e) => e.preventDefault()}
 				onCopy={(e) => e.preventDefault()}
 				onPaste={(e) => e.preventDefault()}
-				value={typedWords}
+				value={typedText}
 			/>
 
 			<div
@@ -80,10 +91,19 @@ function Words() {
 	);
 }
 
-export default function Main({ testTime, time, setTime }) {
+export default function Main({ time, setTime, currentTime, setCurrentTime }) {
+	useEffect(() => {
+		setCurrentTime(time);
+	}, [time]);
+
 	return (
 		<main className="container-column">
-			<Stats testTime={testTime} time={time} setTime={setTime} />
+			<Stats
+				time={time}
+				setTime={setTime}
+				currentTime={currentTime}
+				setCurrentTime={setCurrentTime}
+			/>
 			<Words />
 		</main>
 	);

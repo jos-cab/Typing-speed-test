@@ -1,15 +1,15 @@
-@import "./abstracts/variables";
+@use "abstracts/variables";
 
-@import "./themes/onedark";
+@use "themes/onedark";
 
-@import "./base/reset";
-@import "./base/typography";
+@use "base/reset";
+@use "base/typography";
 
-@import "./layout/containers";
+@use "layout/containers";
 
-@import "./components/app";
-@import "./components/header";
-@import "./components/main";
-@import "./components/settings";
+@use "components/app";
+@use "components/header";
+@use "components/main";
+@use "components/settings";
 
-@import "./base/media-queries";
+@use "base/media-queries";

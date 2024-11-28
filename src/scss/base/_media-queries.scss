@@ -1,4 +1,6 @@
-@media (min-width: $breakpoint-medium) {
+@use "../abstracts/variables";
+
+@media (min-width: variables.$breakpoint-medium) {
 	header {
 		flex-direction: row;
 	}

@@ -5,4 +5,11 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
 	plugins: [react()],
 	base: "https://jos-cabrera.github.io/Typing-speed-test/",
+	css: {
+		preprocessorOptions: {
+			scss: {
+				api: "modern-compiler", // or "modern"
+			},
+		},
+	},
 });

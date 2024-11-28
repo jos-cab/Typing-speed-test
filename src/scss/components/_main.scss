@@ -1,3 +1,5 @@
+@use "../themes/onedark";
+
 main {
 	margin-top: 100px;
 	display: flex;
@@ -11,7 +13,7 @@ main {
 }
 
 .stats {
-	color: $color-8;
+	color: onedark.$color-8;
 	gap: 1.5em;
 	font-size: 2em;
 	user-select: none;
@@ -33,7 +35,7 @@ main {
 }
 
 .typing-area {
-	caret-color: $color-8;
+	caret-color: onedark.$color-8;
 
 	&:focus {
 		outline: none;
@@ -58,7 +60,7 @@ main {
 
 	&::after {
 		content: "Tap to start typing";
-		color: $color-6;
+		color: onedark.$color-6;
 		font-weight: bold;
 		font-size: 1.5em;
 		display: block;
@@ -73,7 +75,7 @@ main {
 }
 
 .characters {
-	color: $color-8;
+	color: onedark.$color-8;
 	z-index: 0;
 	filter: blur(5px);
 	user-select: none;
@@ -87,9 +89,9 @@ main {
 }
 
 .incorrect-character {
-	color: $color-2;
+	color: onedark.$color-2;
 }
 
 .correct-character {
-	color: $color-3;
+	color: onedark.$color-3;
 }

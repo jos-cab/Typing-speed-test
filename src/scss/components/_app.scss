@@ -1,5 +1,7 @@
+@use "../themes/onedark";
+
 #root {
 	width: 100dvw;
 	height: 100dvh;
-	background-color: $color-1;
+	background-color: onedark.$color-1;
 }

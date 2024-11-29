@@ -1,8 +1,27 @@
 import { useState, useRef, useMemo, useEffect } from "react";
+import selectedLanguage from "../data/english.json";
 
-function Stats({ time, setTime, currentTime, setCurrentTime }) {
+// TODO: finish calulations after time is completed
+// TODO: finish time when typing is done
+function Stats({
+	time,
+	setTime,
+	currentTime,
+	setCurrentTime,
+	phrase,
+	numberCharactersTyped,
+	setNumberCharactersTyped,
+	numberCharactersTypedWrong,
+	setNumberCharactersTypedWrong,
+}) {
 	const [accuracy, setAccuracy] = useState(100);
 	const [wordsPerMinute, setWordsPerMinute] = useState(0);
+	const averageWordLength = useMemo(() => {
+		return phrase
+			? phrase.split(" ").reduce((acc, word) => acc + word.length, 0) /
+					phrase.split(" ").length
+			: 0;
+	}, [phrase]);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -14,7 +33,23 @@ function Stats({ time, setTime, currentTime, setCurrentTime }) {
 		}, 1000);
 
 		return () => clearInterval(interval);
-	}, [currentTime]);
+	}, [currentTime, setCurrentTime]);
+
+	useEffect(() => {
+		if (currentTime > 0) {
+			const totalWords = numberCharactersTyped / averageWordLength;
+			setWordsPerMinute(
+				Math.trunc((totalWords / (time - currentTime)) * 60) || 0
+			);
+			setAccuracy(
+				(
+					((phrase.length - numberCharactersTypedWrong) /
+						phrase.length) *
+					100
+				).toFixed(1) || 0
+			);
+		}
+	}, [numberCharactersTyped, time, currentTime, averageWordLength]);
 
 	return (
 		<div className="stats container">
@@ -25,46 +60,46 @@ function Stats({ time, setTime, currentTime, setCurrentTime }) {
 	);
 }
 
-function Words() {
-	const [typedText, setTypedText] = useState("");
+function Words({
+	phrase,
+	typedText,
+	setTypedTextRef,
+	setNumberCharactersTyped,
+	setNumberCharactersTypedWrong,
+}) {
 	const characterListRef = useRef(null);
 
-	const phrase =
-		"The quick brown fox jumps over the lazy dog. The five boxing wizards jump quickly.";
-
-	const characters = useMemo(
-		() =>
-			phrase.split("").map((_, index) => (
+	const characters = useMemo(() => {
+		if (!phrase || phrase.length === 0) return []; // Ensure phrase is valid.
+		return phrase.split("").map((char, index) => {
+			const correct = typedText[index] === char;
+			return (
 				<span
 					key={index}
 					className={
 						typedText[index]
-							? typedText[index] === phrase[index]
+							? correct
 								? "correct-character"
 								: "incorrect-character"
 							: ""
 					}
 				>
-					{phrase[index] === " " &&
-					typedText[index] !== phrase[index] &&
-					typedText[index]
-						? "_"
-						: phrase[index]}
+					{char === " " && typedText[index] && !correct ? "_" : char}
 				</span>
-			)),
-		[typedText, phrase]
-	);
+			);
+		});
+	}, [typedText, phrase]);
 
 	const handleInput = (event) => {
 		const newText = event.target.value;
 
-		if (event.key === "Tab") {
-			event.preventDefault();
-			setTypedText((prev) => prev + "\t");
-			return;
-		}
+		if (newText.length <= phrase?.length) setTypedTextRef(newText);
 
-		if (newText.length <= phrase.length) setTypedText(newText);
+		setNumberCharactersTyped(newText.length);
+		setNumberCharactersTypedWrong(
+			newText.split("").filter((char, index) => char !== phrase[index])
+				.length
+		);
 	};
 
 	return (
@@ -78,6 +113,7 @@ function Words() {
 				onCopy={(e) => e.preventDefault()}
 				onPaste={(e) => e.preventDefault()}
 				value={typedText}
+				//onFocus={e} // TODO start calculating time wpm and accuracy on focus stop when mousemove
 			/>
 
 			<div
@@ -92,9 +128,31 @@ function Words() {
 }
 
 export default function Main({ time, setTime, currentTime, setCurrentTime }) {
+	const [numberCharactersTyped, setNumberCharactersTyped] = useState(0);
+	const [numberCharactersTypedWrong, setNumberCharactersTypedWrong] =
+		useState(0);
+	const typedTextRef = useRef("");
+	const setTypedTextRef = (newText) => (typedTextRef.current = newText);
+
+	const wordList = selectedLanguage.words;
+
+	const phrase = useMemo(() => {
+		if (!wordList || wordList.length === 0) return ""; // Safeguard against empty or undefined word lists.
+		let phrase = "";
+
+		for (let i = 0; i < 20; i++) {
+			phrase +=
+				wordList[Math.floor(Math.random() * wordList.length)] + " ";
+		}
+
+		setTypedTextRef("");
+		setNumberCharactersTyped(0);
+		return phrase.trim(); // Trim any trailing space.
+	}, [wordList]);
+
 	useEffect(() => {
 		setCurrentTime(time);
-	}, [time]);
+	}, [time, setCurrentTime]);
 
 	return (
 		<main className="container-column">
@@ -103,8 +161,21 @@ export default function Main({ time, setTime, currentTime, setCurrentTime }) {
 				setTime={setTime}
 				currentTime={currentTime}
 				setCurrentTime={setCurrentTime}
+				phrase={phrase}
+				typedTextRef={typedTextRef.current}
+				setTypedTextRef={setTypedTextRef}
+				numberCharactersTyped={numberCharactersTyped}
+				setNumberCharactersTyped={setNumberCharactersTyped}
+				numberCharactersTypedWrong={numberCharactersTypedWrong}
+				setNumberCharactersTypedWrong={setNumberCharactersTypedWrong}
 			/>
-			<Words />
+			<Words
+				phrase={phrase}
+				typedText={typedTextRef.current}
+				setTypedTextRef={setTypedTextRef}
+				setNumberCharactersTyped={setNumberCharactersTyped}
+				setNumberCharactersTypedWrong={setNumberCharactersTypedWrong}
+			/>
 		</main>
 	);
 }

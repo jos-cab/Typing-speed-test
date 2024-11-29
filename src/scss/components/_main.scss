@@ -23,7 +23,10 @@ main {
 	margin-bottom: 30px;
 }
 
+// TODO: .typing-area keeps writing after line is empty
+
 .typing-area {
+	height: 100%;
 	position: absolute;
 	background-color: transparent;
 	color: transparent;
@@ -87,7 +90,6 @@ main {
 .characters {
 	width: 100%;
 	font-size: 1.25rem;
-	height: 200px;
 }
 
 .incorrect-character {

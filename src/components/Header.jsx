@@ -29,11 +29,13 @@ function TestTimeButton({
 	index,
 	selectedButtonIndex,
 	setSelectedButtonIndex,
-	setTime,
 }) {
+	const dispatch = useDispatch();
+
 	const handleClick = () => {
 		setSelectedButtonIndex(index);
-		setTime(duration);
+		dispatch(setCurrentTime(duration));
+		dispatch(setTestTime(duration));
 	};
 
 	return (
@@ -48,24 +50,32 @@ function TestTimeButton({
 	);
 }
 
-function Header({ settingsOpened, setSettingsOpened, time, setTime }) {
-	const times = [15, 30, 60, 120];
+function Header() {
 	const dispatch = useDispatch();
-	const [selectedButtonIndex, setSelectedButtonIndex] = useState(1);
+
+	const times = [15, 30, 60, 120];
+	const [selectedButtonIndex, setSelectedButtonIndex] = useState(
+		JSON.parse(localStorage.getItem("selectedButtonIndex")) || 0
+	);
 
 	useEffect(() => {
+		localStorage.setItem(
+			"selectedButtonIndex",
+			JSON.stringify(selectedButtonIndex)
+		);
+
 		dispatch(setTestTime(times[selectedButtonIndex]));
 		dispatch(setCurrentTime(times[selectedButtonIndex]));
-	}, [selectedButtonIndex]);
+	}, [selectedButtonIndex, times]);
 
 	return (
 		<header className="container-column">
 			<div className="home container">
 				<h1 className="main-title">Typing test</h1>
-				<SettingsIcon
+				{/* <SettingsIcon
 					isSettingsOpen={settingsOpened}
 					setIsSettingsOpen={setSettingsOpened}
-				/>
+				/> */}
 			</div>
 
 			<div className="button-list container">
@@ -76,7 +86,6 @@ function Header({ settingsOpened, setSettingsOpened, time, setTime }) {
 						index={index}
 						selectedButtonIndex={selectedButtonIndex}
 						setSelectedButtonIndex={setSelectedButtonIndex}
-						setTime={setTime}
 					/>
 				))}
 			</div>

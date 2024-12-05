@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 function Stats() {
 	const testTime = useSelector((state) => state.testTime.testTimeValue);
 	const currentTime = useSelector((state) => state.timer.currentTimeValue);
+	const isRunning = useSelector((state) => state.timer.isRunningValue);
 
 	const words = useSelector((state) => state.words.wordsValue);
 	const typedWords = useSelector((state) => state.typedWords.typedWordsValue);
@@ -23,7 +24,7 @@ function Stats() {
 	}, [words]);
 
 	useEffect(() => {
-		if (currentTime > 0) {
+		if (currentTime > 0 && isRunning) {
 			const numberCharactersTyped = typedWords.split("").length;
 			const numberCharactersTypedWrong = typedWords
 				.split("")
@@ -35,9 +36,12 @@ function Stats() {
 				numberCharactersTyped / averageWordLength;
 
 			setWordsPerMinute(
-				Math.trunc(
-					(typingProgressRatio / (testTime - currentTime)) * 60
-				) || 0
+				testTime === currentTime
+					? 0
+					: Math.trunc(
+							(typingProgressRatio / (testTime - currentTime)) *
+								60
+					  )
 			);
 
 			setAccuracy(
@@ -48,7 +52,7 @@ function Stats() {
 				).toFixed(1) || 0
 			);
 		}
-	}, [typedWords, testTime, currentTime, averageWordLength]);
+	}, [typedWords, testTime, isRunning, currentTime, averageWordLength]);
 
 	return (
 		<div className="stats container">

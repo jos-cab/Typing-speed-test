@@ -2,10 +2,12 @@ import selectedLanguage from "../../data/english.json";
 import { useMemo, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setTypedWords, setWords } from "./wordsSlice";
+import { setIsRunning } from "../timer/timerSlice";
 
 export function Words() {
 	const words = useSelector((state) => state.words.wordsValue);
 	const typedWords = useSelector((state) => state.typedWords.typedWordsValue);
+	const currentTime = useSelector((state) => state.timer.currentTimeValue);
 	const dispatch = useDispatch();
 
 	const characterListRef = useRef(null);
@@ -15,7 +17,7 @@ export function Words() {
 		const generateWords = () => {
 			if (!wordList || wordList.length === 0) return "";
 
-			const wordCount = 20;
+			const wordCount = 150;
 			let words = "";
 
 			for (let i = 0; i < wordCount; i++) {
@@ -52,10 +54,16 @@ export function Words() {
 		});
 	}, [typedWords, words]);
 
+	// TODO: pensalize for errors
+
 	const handleInput = (e) => {
 		const newText = e.target.value;
 
 		if (newText.length <= words.length) dispatch(setTypedWords(newText));
+	};
+
+	const handleFocus = () => {
+		if (typedWords.length !== words.length) dispatch(setIsRunning(true));
 	};
 
 	return (
@@ -69,7 +77,11 @@ export function Words() {
 				onCopy={(e) => e.preventDefault()}
 				onPaste={(e) => e.preventDefault()}
 				value={typedWords}
-				//onFocus={e} // TODO start calculating time wpm and accuracy on focus stop when mousemove
+				onFocus={handleFocus}
+				onBlur={() => dispatch(setIsRunning(false))}
+				disabled={
+					typedWords.length === words.length || currentTime <= 0
+				}
 			/>
 
 			<div

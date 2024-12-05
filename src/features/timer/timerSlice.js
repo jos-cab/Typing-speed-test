@@ -24,11 +24,15 @@ export const timerSlice = createSlice({
 		setCurrentTime: (state, action) => {
 			state.currentTimeValue = action.payload;
 		},
+		setIsRunning: (state, action) => {
+			state.isRunningValue = action.payload;
+		},
 	},
 });
 
 export const { setTestTime } = testTimeSlice.actions;
-export const { decrementCurrentTime, setCurrentTime } = timerSlice.actions;
+export const { decrementCurrentTime, setCurrentTime, setIsRunning } =
+	timerSlice.actions;
 
 export const testTimeReducer = testTimeSlice.reducer;
 export const timerReducer = timerSlice.reducer;

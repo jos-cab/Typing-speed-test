@@ -11,10 +11,7 @@ function App() {
 	return (
 		<>
 			<Provider store={store}>
-				<Header
-					settingsOpened={settingsOpened}
-					setSettingsOpened={setSettingsOpened}
-				/>
+				<Header />
 				<Main />
 				{/* {settingsOpened && (
 				<Settings

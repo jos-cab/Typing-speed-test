@@ -1,37 +1,29 @@
 import Header from "./components/Header";
 //import SettingsComp from "./components/Settings";
 import Main from "./components/Main";
-import { useState } from "react";
+import store from "./app/store";
+import { Provider } from "react-redux";
+//import { useState } from "react";
 
 function App() {
-	const [settingsOpened, setSettingsOpened] = useState(false);
-	const [time, setTime] = useState(null);
-	const [currentTime, setCurrentTime] = useState(null);
+	//const [settingsOpened, setSettingsOpened] = useState(false);
 
 	return (
 		<>
-			<Header
-				settingsOpened={settingsOpened}
-				setSettingsOpened={setSettingsOpened}
-				time={time}
-				setTime={setTime}
-				currentTime={currentTime}
-				setCurrentTime={setCurrentTime}
-			/>
-			<Main
-				time={time}
-				setTime={setTime}
-				currentTime={currentTime}
-				setCurrentTime={setCurrentTime}
-			/>
-			{/* {settingsOpened && (
+			<Provider store={store}>
+				<Header
+					settingsOpened={settingsOpened}
+					setSettingsOpened={setSettingsOpened}
+				/>
+				<Main />
+				{/* {settingsOpened && (
 				<Settings
 					settingsOpened={settingsOpened}
 					setSettingsOpened={setSettingsOpened}
 				/>
 			)} */}
+			</Provider>
 		</>
 	);
 }
-
 export default App;

@@ -1,4 +1,6 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setTestTime, setCurrentTime } from "../features/timer/timerSlice";
 
 function SettingsIcon({ isSettingsOpen, setIsSettingsOpen }) {
 	const handleClick = () => setIsSettingsOpen((prev) => !prev);
@@ -46,18 +48,14 @@ function TestTimeButton({
 	);
 }
 
-function Header({
-	settingsOpened,
-	setSettingsOpened,
-	time,
-	setTime,
-	currentTime,
-	setCurrentTime,
-}) {
+function Header({ settingsOpened, setSettingsOpened, time, setTime }) {
+	const times = [15, 30, 60, 120];
+	const dispatch = useDispatch();
 	const [selectedButtonIndex, setSelectedButtonIndex] = useState(1);
 
 	useEffect(() => {
-		setTime([15, 30, 60, 120][selectedButtonIndex]);
+		dispatch(setTestTime(times[selectedButtonIndex]));
+		dispatch(setCurrentTime(times[selectedButtonIndex]));
 	}, [selectedButtonIndex]);
 
 	return (
@@ -71,7 +69,7 @@ function Header({
 			</div>
 
 			<div className="button-list container">
-				{[15, 30, 60, 120].map((duration, index) => (
+				{times.map((duration, index) => (
 					<TestTimeButton
 						key={duration}
 						duration={duration}

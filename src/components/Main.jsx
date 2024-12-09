@@ -1,7 +1,7 @@
-import { useState, useMemo, useEffect } from "react";
-import { Timer } from "../features/timer/Timer";
-import { Words } from "../features/words/Words";
-import { useSelector } from "react-redux";
+import { useState, useMemo, useEffect } from 'react';
+import { Timer } from '../features/timer/Timer';
+import { Words } from '../features/words/Words';
+import { useSelector } from 'react-redux';
 
 // TODO: finish calulations after time is completed
 // TODO: finish time when typing is done
@@ -11,25 +11,26 @@ function Stats() {
 	const isRunning = useSelector((state) => state.timer.isRunningValue);
 
 	const words = useSelector((state) => state.words.wordsValue);
-	const typedWords = useSelector((state) => state.typedWords.typedWordsValue);
+	const typedCharacters = useSelector(
+		(state) => state.typedCharacters.typedCharactersValue
+	);
 
 	const [accuracy, setAccuracy] = useState(100);
 	const [wordsPerMinute, setWordsPerMinute] = useState(0);
 
 	const averageWordLength = useMemo(() => {
 		return words
-			? words.split(" ").reduce((acc, word) => acc + word.length, 0) /
-					words.split(" ").length
+			? words.reduce((acc, word) => acc + word.length, 0) / words.length
 			: 0;
 	}, [words]);
 
 	useEffect(() => {
 		if (currentTime > 0 && isRunning) {
-			const numberCharactersTyped = typedWords.split("").length;
-			const numberCharactersTypedWrong = typedWords
-				.split("")
+			const numberCharactersTyped = typedCharacters.split('').length;
+			const numberCharactersTypedWrong = typedCharacters
+				.split('')
 				.filter(
-					(char, index) => char !== words.split("")[index]
+					(char, index) => char !== words.join(' ')[index]
 				).length;
 
 			const typingProgressRatio =
@@ -52,20 +53,20 @@ function Stats() {
 				).toFixed(1) || 0
 			);
 		}
-	}, [typedWords, testTime, isRunning, currentTime, averageWordLength]);
+	}, [typedCharacters, testTime, isRunning, currentTime, averageWordLength]);
 
 	return (
-		<div className="stats container">
+		<div className='stats container'>
 			<Timer />
-			<span className="words-per-minute">{wordsPerMinute}</span>
-			<span className="accuracy">{accuracy}%</span>
+			<span className='words-per-minute'>{wordsPerMinute}</span>
+			<span className='accuracy'>{accuracy}%</span>
 		</div>
 	);
 }
 
 export default function Main() {
 	return (
-		<main className="container-column">
+		<main className='container-column'>
 			<Stats />
 			<Words />
 		</main>

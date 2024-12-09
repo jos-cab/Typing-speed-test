@@ -1,12 +1,14 @@
-import React, { useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { decrementCurrentTime, setIsRunning } from "./timerSlice";
+import React, { useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { decrementCurrentTime, setIsRunning } from './timerSlice';
 
 export function Timer() {
 	const currentTime = useSelector((state) => state.timer.currentTimeValue);
 	const isRunning = useSelector((state) => state.timer.isRunningValue);
-	const typedWords = useSelector((state) => state.typedWords.typedWordsValue);
-	const words = useSelector((state) => state.words.wordsValue);
+	const typedCharacters = useSelector(
+		(state) => state.typedCharacters.typedCharactersValue
+	);
+	const words = useSelector((state) => state.words.wordsValue.join(' '));
 	const dispatch = useDispatch();
 
 	const timerRef = useRef(null);
@@ -26,14 +28,14 @@ export function Timer() {
 	}, [isRunning, currentTime]);
 
 	useEffect(() => {
-		if (typedWords.length === words.length) {
+		if (typedCharacters.length === words.length) {
 			dispatch(setIsRunning(false));
 			clearInterval(timerRef.current);
 		}
-	}, [typedWords, words]);
+	}, [typedCharacters, words]);
 
 	// I don't merge useEffects because it cause problems with the interval.
 	// When I write timer stops.
 
-	return <span className="time">{currentTime}</span>;
+	return <span className='time'>{currentTime}</span>;
 }

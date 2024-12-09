@@ -1,5 +1,5 @@
-@use "../themes/onedark" as *;
-@use "../abstracts/variables" as *;
+@use '../themes/onedark' as *;
+@use '../abstracts/variables' as *;
 
 main {
 	margin-top: 75px;
@@ -40,15 +40,15 @@ main {
 }
 
 .typing-area {
-	caret-color: $color-8;
+	// caret-color: $color-8;
 
 	&:focus {
 		outline: none;
 		cursor: default;
-	}
 
-	&:focus + .characters {
-		filter: none;
+		& + .words .word .letter {
+			filter: none;
+		}
 	}
 
 	&::selection {
@@ -60,7 +60,7 @@ main {
 	}
 }
 
-.words {
+.word-list {
 	position: relative;
 
 	&:focus-within::after {
@@ -68,7 +68,7 @@ main {
 	}
 
 	&::after {
-		content: "Tap to start typing";
+		content: 'Tap to start typing';
 		color: $color-6;
 		font-weight: bold;
 		font-size: 1.5em;
@@ -87,21 +87,34 @@ main {
 	}
 }
 
-.characters {
+.words {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.word {
+	display: inline;
+
+	/*&::after {
+		content: ' ';
+	}*/
+}
+
+.letter {
 	color: $color-8;
-	z-index: 0;
 	filter: blur(5px);
 	user-select: none;
+	white-space: pre;
 }
 
 .typing-area,
-.characters {
+.letter {
 	width: 100%;
 	font-size: 1.25rem;
 }
 
 .typing-area:disabled {
-	& + .characters {
+	& + .letter {
 		filter: none;
 	}
 }
@@ -113,3 +126,23 @@ main {
 .correct-character {
 	color: $color-3;
 }
+
+.carret {
+	background-color: $color-5;
+	width: 2px;
+	height: 1.25em;
+	position: absolute;
+	top: 0.25em;
+	left: 0;
+	//animation: blink 0.5s alternate infinite both;
+}
+
+/*@keyframes blink {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}*/

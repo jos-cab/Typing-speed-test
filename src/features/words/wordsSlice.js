@@ -1,21 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-export const typedWordsSlice = createSlice({
-	name: "typedWords",
+export const typedCharactersSlice = createSlice({
+	name: 'typedCharacters',
 	initialState: {
-		typedWordsValue: "",
+		typedCharactersValue: '',
 	},
 	reducers: {
-		setTypedWords: (state, action) => {
-			state.typedWordsValue = action.payload;
+		setTypedCharacters: (state, action) => {
+			state.typedCharactersValue = action.payload;
 		},
 	},
 });
 
 export const wordsSlice = createSlice({
-	name: "words",
+	name: 'words',
 	initialState: {
-		wordsValue: "",
+		wordsValue: [],
 	},
 	reducers: {
 		setWords: (state, action) => {
@@ -25,7 +25,7 @@ export const wordsSlice = createSlice({
 });
 
 export const { setWords } = wordsSlice.actions;
-export const { setTypedWords } = typedWordsSlice.actions;
+export const { setTypedCharacters } = typedCharactersSlice.actions;
 
 export const wordsReducer = wordsSlice.reducer;
-export const typedWordsReducer = typedWordsSlice.reducer;
+export const typedCharactersReducer = typedCharactersSlice.reducer;

@@ -22,7 +22,7 @@ export function Words() {
 		const generateWords = () => {
 			if (!wordList || wordList.length === 0) return [];
 
-			const wordCount = 20;
+			const wordCount = 150;
 			let words = [];
 
 			for (let i = 0; i < wordCount; i++) {
@@ -114,7 +114,7 @@ export function Words() {
 			dispatch(setTypedCharacters(inputText));
 
 			// Update caret position
-			carretRef.current.style.top = `${currentLine * 1.65 + 0.1}em`;
+			carretRef.current.style.top = `${currentLine * 1.63 + 0.1}em`;
 			carretRef.current.style.left = `${remainingLength}px`;
 		}
 	};
@@ -133,6 +133,12 @@ export function Words() {
 					typingAreaRef.current.focus();
 				}}
 				onChange={handleInput}
+				onKeyDown={(e) => {
+					if (e.key === 'Enter' || e.key === 'Tab') {
+						e.preventDefault();
+					}
+				}}
+				onMouseLeave={() => typingAreaRef.current.blur()}
 				className='typing-area'
 				name='typing-area'
 				spellCheck={false}

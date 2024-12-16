@@ -3,8 +3,6 @@ import { Timer } from '../features/timer/Timer';
 import { Words } from '../features/words/Words';
 import { useSelector } from 'react-redux';
 
-// TODO: finish calulations after time is completed
-// TODO: finish time when typing is done
 function Stats() {
 	const testTime = useSelector((state) => state.testTime.testTimeValue);
 	const currentTime = useSelector((state) => state.timer.currentTimeValue);
@@ -19,40 +17,32 @@ function Stats() {
 	const [wordsPerMinute, setWordsPerMinute] = useState(0);
 
 	const averageWordLength = useMemo(() => {
-		return words
+		return words?.length
 			? words.reduce((acc, word) => acc + word.length, 0) / words.length
 			: 0;
 	}, [words]);
 
 	useEffect(() => {
-		if (currentTime > 0 && isRunning) {
-			const numberCharactersTyped = typedCharacters.split('').length;
-			const numberCharactersTypedWrong = typedCharacters
-				.split('')
-				.filter(
-					(char, index) => char !== words.join(' ')[index]
-				).length;
+		if (!isRunning || currentTime <= 0 || testTime <= 0) return;
 
-			const typingProgressRatio =
-				numberCharactersTyped / averageWordLength;
+		const typedLength = typedCharacters.length;
+		const correctChars = words
+			.join(' ')
+			.slice(0, typedLength)
+			.split('')
+			.filter((char, index) => char === typedCharacters[index]).length;
 
-			setWordsPerMinute(
-				testTime === currentTime
-					? 0
-					: Math.trunc(
-							(typingProgressRatio / (testTime - currentTime)) *
-								60
-					  )
-			);
+		const accuracyValue = ((correctChars / typedLength) * 100).toFixed(1);
+		setAccuracy(typedLength === 0 ? 100 : accuracyValue);
 
-			setAccuracy(
-				(
-					((words.length - numberCharactersTypedWrong) /
-						words.length) *
-					100
-				).toFixed(1) || 0
-			);
-		}
+		const elapsedTime = testTime - currentTime;
+		const wpm =
+			elapsedTime > 0
+				? Math.trunc(
+						(typedLength / averageWordLength / elapsedTime) * 60
+				  )
+				: 0;
+		setWordsPerMinute(wpm);
 	}, [typedCharacters, testTime, isRunning, currentTime, averageWordLength]);
 
 	return (

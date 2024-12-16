@@ -78,16 +78,49 @@ export function Words() {
 	// TODO: pensalize for errors
 
 	const handleInput = (e) => {
-		const newText = e.target.value;
+		const inputText = e.target.value;
+		const maxLineLength = wordListRef.current.offsetWidth;
 
-		//console.log(newText.length);
+		const linesLengths = [];
+		let currentLineLength = 0;
 
-		if (newText.length <= words.join(' ').length) {
-			dispatch(setTypedCharacters(newText));
+		// Calculate lengths of all lines
+		words.forEach((word) => {
+			const wordLength = (word.length + 1) * 12;
+			if (currentLineLength + wordLength >= maxLineLength) {
+				linesLengths.push(currentLineLength - 12);
+				currentLineLength = wordLength;
+			} else {
+				currentLineLength += wordLength;
+			}
+		});
 
-			carretRef.current.style.left = `${
-				e.target.selectionStart * 0.75
-			}rem`;
+		if (currentLineLength > 0) linesLengths.push(currentLineLength);
+
+		console.log('Lines lengths: ', linesLengths);
+		console.log('input length: ', inputText.length * 12);
+
+		// Calculate the current line and caret position
+		let remainingLength = inputText.length * 12; // Total caret position in pixels
+		let currentLine = 0;
+
+		for (let i = 0; i < linesLengths.length; i++) {
+			if (remainingLength <= linesLengths[i]) {
+				break; // Caret is on this line
+			}
+			remainingLength -= linesLengths[i] + 12;
+			currentLine++;
+		}
+
+		console.log('Remaining length: ', remainingLength);
+		console.log('Current line: ', currentLine);
+
+		if (inputText.length <= words.join(' ').length) {
+			dispatch(setTypedCharacters(inputText));
+
+			// Update caret position
+			carretRef.current.style.top = `${currentLine * 1.65}em`;
+			carretRef.current.style.left = `${remainingLength}px`;
 		}
 	};
 

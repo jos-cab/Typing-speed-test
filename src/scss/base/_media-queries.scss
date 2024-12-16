@@ -1,4 +1,4 @@
-@use "../abstracts/variables" as *;
+@use '../abstracts/variables' as *;
 
 @media (min-width: $breakpoint-medium) {
 	header {
@@ -14,9 +14,9 @@
 		justify-content: flex-start;
 	}
 
-	.words {
+	.word-list {
 		&::after {
-			content: "Click to start typing";
+			content: 'Click to start typing';
 		}
 	}
 }

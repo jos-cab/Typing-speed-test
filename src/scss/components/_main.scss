@@ -34,9 +34,9 @@ main {
 	border: 0;
 	cursor: pointer;
 	z-index: 1;
-	white-space: normal;
-	word-break: break-word;
+	word-break: break-all;
 	overflow-wrap: break-word;
+	white-space: pre-warp;
 }
 
 .typing-area {
@@ -62,6 +62,10 @@ main {
 
 .word-list {
 	position: relative;
+
+	&:focus-within .carret {
+		display: block;
+	}
 
 	&:focus-within::after {
 		display: none;
@@ -128,16 +132,17 @@ main {
 }
 
 .carret {
+	display: none;
 	background-color: $color-5;
 	width: 2px;
 	height: 1.25em;
 	position: absolute;
-	top: 0.25em;
+	//top: 0.25rem;
 	left: 0;
 	//animation: blink 0.5s alternate infinite both;
 }
 
-/*@keyframes blink {
+@keyframes blink {
 	from {
 		opacity: 0;
 	}
@@ -145,4 +150,4 @@ main {
 	to {
 		opacity: 1;
 	}
-}*/
+}

@@ -14,6 +14,7 @@ export function Words() {
 
 	const carretRef = useRef(null);
 	const wordListRef = useRef(null);
+	const typingAreaRef = useRef(null);
 
 	const wordList = selectedLanguage.words;
 
@@ -97,9 +98,6 @@ export function Words() {
 
 		if (currentLineLength > 0) linesLengths.push(currentLineLength);
 
-		console.log('Lines lengths: ', linesLengths);
-		console.log('input length: ', inputText.length * 12);
-
 		// Calculate the current line and caret position
 		let remainingLength = inputText.length * 12; // Total caret position in pixels
 		let currentLine = 0;
@@ -112,14 +110,11 @@ export function Words() {
 			currentLine++;
 		}
 
-		console.log('Remaining length: ', remainingLength);
-		console.log('Current line: ', currentLine);
-
 		if (inputText.length <= words.join(' ').length) {
 			dispatch(setTypedCharacters(inputText));
 
 			// Update caret position
-			carretRef.current.style.top = `${currentLine * 1.65}em`;
+			carretRef.current.style.top = `${currentLine * 1.65 + 0.1}em`;
 			carretRef.current.style.left = `${remainingLength}px`;
 		}
 	};
@@ -132,6 +127,11 @@ export function Words() {
 	return (
 		<div className='word-list container-column'>
 			<textarea
+				ref={typingAreaRef}
+				onMouseDown={(e) => e.preventDefault()}
+				onClick={() => {
+					typingAreaRef.current.focus();
+				}}
 				onChange={handleInput}
 				className='typing-area'
 				name='typing-area'

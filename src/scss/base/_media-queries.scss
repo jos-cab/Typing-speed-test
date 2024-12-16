@@ -1,5 +1,16 @@
 @use '../abstracts/variables' as *;
 
+@media (min-width: $breakpoint-small) {
+	main {
+		margin-top: 75px;
+	}
+
+	.stats {
+		flex-direction: row;
+		gap: 1.5em;
+	}
+}
+
 @media (min-width: $breakpoint-medium) {
 	header {
 		flex-direction: row !important;

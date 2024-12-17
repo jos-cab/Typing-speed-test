@@ -48,8 +48,8 @@ function Stats() {
 	return (
 		<div className='stats container'>
 			<Timer />
-			<span className='words-per-minute'>{wordsPerMinute}</span>
-			<span className='accuracy'>{accuracy}%</span>
+			<span className='words-per-minute'>WPM: {wordsPerMinute}</span>
+			<span className='accuracy'>ACC: {accuracy}%</span>
 		</div>
 	);
 }

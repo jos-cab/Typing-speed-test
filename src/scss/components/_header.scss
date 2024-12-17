@@ -1,5 +1,5 @@
-@use "../themes/onedark" as *;
-@use "../abstracts/variables" as *;
+@use '../themes/onedark' as *;
+@use '../abstracts/variables' as *;
 
 header {
 	justify-content: space-between;
@@ -28,6 +28,14 @@ header {
 
 .button-list {
 	gap: 1em;
+
+	.time {
+		// Time icon
+		&::before {
+			width: 1.5em;
+			height: 1.5em;
+		}
+	}
 }
 
 .test-time-btn {

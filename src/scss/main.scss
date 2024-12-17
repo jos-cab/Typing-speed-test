@@ -1,11 +1,12 @@
-@use "base/reset";
-@use "base/typography";
+@use 'base/reset';
+@use 'base/typography';
 
-@use "layout/containers";
+@use 'layout/containers';
 
-@use "components/app";
-@use "components/header";
-@use "components/main";
-@use "components/settings";
+@use 'components/app';
+@use 'components/header';
+@use 'components/main';
+@use 'components/settings';
+@use 'components/timer';
 
-@use "base/media-queries";
+@use 'base/media-queries';

@@ -1,0 +1,19 @@
+@use '../themes/onedark' as *;
+
+.time {
+	display: flex;
+	align-items: center;
+	gap: 1em;
+
+	&::before {
+		content: '';
+		width: 1em;
+		height: 1em;
+		display: inline-block;
+		mask-image: url('clock_hour_ticker_time_times_icon.svg');
+		mask-size: contain;
+		mask-repeat: no-repeat;
+		mask-position: center;
+		background-color: $color-8;
+	}
+}

@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTestTime, setCurrentTime } from '../features/timer/timerSlice';
 
+// TODO: make settings work
+
 function SettingsIcon({ isSettingsOpen, setIsSettingsOpen }) {
 	const handleClick = () => setIsSettingsOpen((prev) => !prev);
 
 	return (
+		// TODO: save svg to public
 		<svg
 			className='settings-icon'
 			xmlns='http://www.w3.org/2000/svg'
@@ -70,6 +73,7 @@ function Header() {
 		dispatch(setCurrentTime(times[selectedButtonIndex]));
 	}, [selectedButtonIndex, isTestFinished]);
 
+	// TODO: weighter time icon
 	return (
 		<header className='container-column'>
 			<div className='home container'>

@@ -24,6 +24,10 @@ export default function Finish() {
 		dispatch(setIsTestFinished(false));
 	};
 
+	// TODO: Make it prettier
+	// TODO: generalize scss
+	// TODO: modularize components
+
 	return (
 		<div className='finish'>
 			<div className='container-column'>

@@ -104,6 +104,7 @@ export function Words() {
 		carretRef.current.style.left = `${remainingLength}px`;
 	}, [typedCharacters, words]);
 
+	// TODO: Generate words procedurally
 	useEffect(() => {
 		if (
 			words.length > 0 &&

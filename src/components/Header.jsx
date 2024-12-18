@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setTestTime, setCurrentTime } from '../features/timer/timerSlice';
 
 function SettingsIcon({ isSettingsOpen, setIsSettingsOpen }) {
@@ -49,6 +49,9 @@ function TestTimeButton({
 
 function Header() {
 	const dispatch = useDispatch();
+	const isTestFinished = useSelector(
+		(state) => state.timer.isTestFinishedValue
+	);
 
 	const times = [15, 30, 60, 120];
 	const [selectedButtonIndex, setSelectedButtonIndex] = useState(
@@ -56,6 +59,8 @@ function Header() {
 	);
 
 	useEffect(() => {
+		if (isTestFinished) return;
+
 		localStorage.setItem(
 			'selectedButtonIndex',
 			JSON.stringify(selectedButtonIndex)
@@ -63,7 +68,7 @@ function Header() {
 
 		dispatch(setTestTime(times[selectedButtonIndex]));
 		dispatch(setCurrentTime(times[selectedButtonIndex]));
-	}, [selectedButtonIndex, times]);
+	}, [selectedButtonIndex, isTestFinished]);
 
 	return (
 		<header className='container-column'>

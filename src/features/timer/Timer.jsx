@@ -5,6 +5,7 @@ import { decrementCurrentTime, setIsRunning } from './timerSlice';
 export function Timer() {
 	const currentTime = useSelector((state) => state.timer.currentTimeValue);
 	const isRunning = useSelector((state) => state.timer.isRunningValue);
+
 	const typedCharacters = useSelector(
 		(state) => state.typedCharacters.typedCharactersValue
 	);

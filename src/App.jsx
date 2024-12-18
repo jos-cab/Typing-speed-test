@@ -1,25 +1,27 @@
-import Header from "./components/Header";
-//import SettingsComp from "./components/Settings";
-import Main from "./components/Main";
-import store from "./app/store";
-import { Provider } from "react-redux";
-//import { useState } from "react";
+import Header from './components/Header';
+//import Settings from "./components/Settings";
+import Main from './components/Main';
+import Finish from './components/Finish';
+import { useSelector } from 'react-redux';
 
 function App() {
 	//const [settingsOpened, setSettingsOpened] = useState(false);
 
+	const isTestFinished = useSelector(
+		(state) => state.timer.isTestFinishedValue
+	);
+
 	return (
 		<>
-			<Provider store={store}>
-				<Header />
-				<Main />
-				{/* {settingsOpened && (
+			<Header />
+			<Main />
+			{/* {settingsOpened && (
 				<Settings
 					settingsOpened={settingsOpened}
 					setSettingsOpened={setSettingsOpened}
 				/>
 			)} */}
-			</Provider>
+			{isTestFinished && <Finish />}
 		</>
 	);
 }

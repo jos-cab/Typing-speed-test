@@ -1,0 +1,18 @@
+@use '../themes/onedark' as *;
+
+.finish {
+	background-color: $color-1;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	& .close-btn {
+		background-color: $color-6;
+	}
+}

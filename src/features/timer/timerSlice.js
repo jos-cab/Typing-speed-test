@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const testTimeSlice = createSlice({
-	name: "testTime",
+	name: 'testTime',
 	initialState: {
 		testTimeValue: 0,
 	},
@@ -13,9 +13,11 @@ export const testTimeSlice = createSlice({
 });
 
 export const timerSlice = createSlice({
-	name: "timer",
+	name: 'timer',
 	initialState: {
 		currentTimeValue: 0,
+		isRunningValue: false,
+		isTestFinishedValue: false,
 	},
 	reducers: {
 		decrementCurrentTime: (state) => {
@@ -27,12 +29,19 @@ export const timerSlice = createSlice({
 		setIsRunning: (state, action) => {
 			state.isRunningValue = action.payload;
 		},
+		setIsTestFinished: (state, action) => {
+			state.isTestFinishedValue = action.payload;
+		},
 	},
 });
 
 export const { setTestTime } = testTimeSlice.actions;
-export const { decrementCurrentTime, setCurrentTime, setIsRunning } =
-	timerSlice.actions;
+export const {
+	decrementCurrentTime,
+	setCurrentTime,
+	setIsRunning,
+	setIsTestFinished,
+} = timerSlice.actions;
 
 export const testTimeReducer = testTimeSlice.reducer;
 export const timerReducer = timerSlice.reducer;

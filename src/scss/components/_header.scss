@@ -18,7 +18,14 @@ header {
 }
 
 .settings-icon {
-	font-size: 1.75em;
+	mask-image: url('/gear_icon.svg');
+	mask-size: contain;
+	mask-repeat: no-repeat;
+	mask-position: center;
+	background-color: $color-8;
+	width: 1.5em;
+	height: 1.5em;
+	font-size: 1em;
 	cursor: pointer;
 
 	& g path {

@@ -1,48 +1,18 @@
-@use "../themes/onedark" as *;
+@use '../themes/onedark' as *;
+@use '../layout/dialog' as *;
+@use '../layout/containers' as *;
 
 .settings {
-	background-color: $color-1;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	z-index: 2;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.menu {
-	flex-direction: column;
-	background-color: $color-5;
-	width: 500px;
-	height: 600px;
-	padding: 2.5em;
-	justify-content: space-between;
-	border-radius: 7px;
+	@include dialog($color-1, $color-1, $color-8, $color-3);
 }
 
 .options {
 	width: 100%;
-
-	& > * {
-		width: 100%;
-		justify-content: space-between;
-	}
 }
 
-.close-btn {
-	color: $color-1;
-	background-color: $color-3;
-	border: 2px solid $color-1;
-	border-radius: 7px;
-	font-size: 1em;
-	text-transform: uppercase;
-	font-weight: bold;
+.option {
+	@include container($direction: row, $justify: space-between);
 	width: 100%;
-	height: 3em;
-	cursor: pointer;
 }
 
 label {

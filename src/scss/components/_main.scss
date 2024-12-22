@@ -98,10 +98,6 @@ main {
 
 .word {
 	display: inline;
-
-	/*&::after {
-		content: ' ';
-	}*/
 }
 
 .letter {
@@ -114,7 +110,7 @@ main {
 .typing-area,
 .letter {
 	width: 100%;
-	font-size: 1.25rem;
+	font-size: $typing-area-size;
 }
 
 .typing-area:disabled {
@@ -134,12 +130,13 @@ main {
 .carret {
 	display: none;
 	background-color: $color-5;
-	width: 2px;
-	height: 1.25em;
+	width: $carret-width;
+	height: $typing-area-size;
 	position: absolute;
 	top: 0.1rem;
 	left: 0;
-	//animation: blink 0.5s alternate infinite both;
+	animation: blink 0.3s alternate infinite both;
+	transition: left 0.1s ease-out;
 }
 
 @keyframes blink {

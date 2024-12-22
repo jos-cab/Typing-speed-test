@@ -1,18 +1,15 @@
 @use '../themes/onedark' as *;
+@use '../layout/dialog' as *;
 
 .finish {
-	background-color: $color-1;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	z-index: 2;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	@include dialog($color-1, $color-1, $color-5, $color-6, $color-1);
+}
 
-	& .close-btn {
-		background-color: $color-6;
+.results {
+	width: 100%;
+
+	span {
+		width: 100%;
+		display: block;
 	}
 }

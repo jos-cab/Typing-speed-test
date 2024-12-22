@@ -1,28 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTestTime, setCurrentTime } from '../features/timer/timerSlice';
+import { useRestartTest } from '../utils';
 
 // TODO: make settings work
 
-function SettingsIcon({ isSettingsOpen, setIsSettingsOpen }) {
-	const handleClick = () => setIsSettingsOpen((prev) => !prev);
+function SettingsIcon({ setSettingsOpened }) {
+	const handleClick = () => setSettingsOpened((prev) => !prev);
 
-	return (
-		// TODO: save svg to public
-		<svg
-			className='settings-icon'
-			xmlns='http://www.w3.org/2000/svg'
-			width='1em'
-			height='1em'
-			viewBox='0 0 24 24'
-			onClick={handleClick}>
-			<g fill='none'>
-				<path
-					fill='black'
-					d='M10.75 2.567a2.5 2.5 0 0 1 2.5 0L19.544 6.2a2.5 2.5 0 0 1 1.25 2.165v7.268a2.5 2.5 0 0 1-1.25 2.165l-6.294 3.634a2.5 2.5 0 0 1-2.5 0l-6.294-3.634a2.5 2.5 0 0 1-1.25-2.165V8.366A2.5 2.5 0 0 1 4.456 6.2zM12 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6'></path>
-			</g>
-		</svg>
-	);
+	return <span className='settings-icon' onClick={handleClick}></span>;
 }
 
 function TestTimeButton({
@@ -33,10 +19,13 @@ function TestTimeButton({
 }) {
 	const dispatch = useDispatch();
 
+	const restartTest = useRestartTest();
+
 	const handleClick = () => {
 		setSelectedButtonIndex(index);
 		dispatch(setCurrentTime(duration));
 		dispatch(setTestTime(duration));
+		restartTest();
 	};
 
 	return (
@@ -50,12 +39,13 @@ function TestTimeButton({
 	);
 }
 
-function Header() {
+function Header({ setSettingsOpened }) {
 	const dispatch = useDispatch();
 	const isTestFinished = useSelector(
 		(state) => state.timer.isTestFinishedValue
 	);
 
+	// TODO: restart test after changing time
 	const times = [15, 30, 60, 120];
 	const [selectedButtonIndex, setSelectedButtonIndex] = useState(
 		JSON.parse(localStorage.getItem('selectedButtonIndex')) || 0
@@ -78,10 +68,7 @@ function Header() {
 		<header className='container-column'>
 			<div className='home container'>
 				<h1 className='main-title'>Typing test</h1>
-				{/* <SettingsIcon
-					isSettingsOpen={settingsOpened}
-					setIsSettingsOpen={setSettingsOpened}
-				/> */}
+				<SettingsIcon setSettingsOpened={setSettingsOpened} />
 			</div>
 
 			<div className='button-list container'>

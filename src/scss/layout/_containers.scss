@@ -1,8 +1,15 @@
-@mixin container($direction: row) {
+@mixin container(
+	$direction: row,
+	$gap: 0,
+	$align: center,
+	$justify: flex-start
+) {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: center;
+	align-items: $align;
 	flex-direction: $direction;
+	justify-content: $justify;
+	gap: $gap;
 }
 
 .container {
@@ -10,5 +17,5 @@
 }
 
 .container-column {
-	@include container($direction: column);
+	@include container($direction: column, $justify: space-between);
 }

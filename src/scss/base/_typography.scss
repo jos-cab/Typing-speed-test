@@ -1,29 +1,8 @@
+@use '../abstracts/variables' as *;
 @use '../themes/onedark' as *;
 
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap');
-
-$headings: (h1, h2, h3, h4, h5, h6);
-$simple-text: (
-	p,
-	span,
-	li,
-	a,
-	button,
-	label,
-	input,
-	textarea,
-	select,
-	option,
-	option,
-	label,
-	legend,
-	fieldset,
-	code,
-	pre,
-	blockquote,
-	hr
-);
 
 // TODO add more fonts
 * {

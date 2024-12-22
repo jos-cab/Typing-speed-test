@@ -102,6 +102,13 @@ export function Words() {
 
 		carretRef.current.style.top = `${currentLine * 1.63 + 0.1}em`;
 		carretRef.current.style.left = `${remainingLength}px`;
+		carretRef.current.style.animation = `none`;
+
+		const timeoutId = setTimeout(() => {
+			carretRef.current.style.animation = `blink 0.3s alternate infinite both`;
+		}, 500);
+
+		return () => clearTimeout(timeoutId);
 	}, [typedCharacters, words]);
 
 	// TODO: Generate words procedurally

@@ -1,3 +1,29 @@
 $breakpoint-small: 768px;
 $breakpoint-medium: 1024px;
 $breakpoint-large: 1200px;
+
+$headings: (h1, h2, h3, h4, h5, h6);
+
+$simple-text: (
+	p,
+	span,
+	li,
+	a,
+	button,
+	label,
+	input,
+	textarea,
+	select,
+	option,
+	option,
+	label,
+	legend,
+	fieldset,
+	code,
+	pre,
+	blockquote,
+	hr
+);
+
+$typing-area-size: 1.25rem;
+$carret-width: 2px;

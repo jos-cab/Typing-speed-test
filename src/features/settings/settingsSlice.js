@@ -15,7 +15,7 @@ export const settingsOpenedSlice = createSlice({
 export const testTypeSlice = createSlice({
 	name: 'test-type',
 	initialState: {
-		testTypeValue: 'words',
+		testTypeValue: 'time',
 		wordCountValue: 50,
 	},
 	reducers: {

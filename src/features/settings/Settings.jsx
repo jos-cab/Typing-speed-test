@@ -39,7 +39,7 @@ export default function Settings() {
 						<label htmlFor='test-type'>Test type</label>
 						<select name='test-type' id='test-type'>
 							<option value='time'>Time</option>
-							<option value='wordCount'>Word count</option>
+							<option value='word'>Word</option>
 						</select>
 						<input
 							type='number'

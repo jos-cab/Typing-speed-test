@@ -34,7 +34,7 @@ export function Stats() {
 			return;
 		}
 
-		const typedLength = typedCharacters.length;
+		const typedLength = typedCharacters.split(' ').join('').length;
 		const correctChars = words
 			.join(' ')
 			.slice(0, typedLength)

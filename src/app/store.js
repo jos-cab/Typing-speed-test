@@ -5,6 +5,10 @@ import {
 	typedCharactersReducer,
 } from '../features/words/wordsSlice';
 import { wpmReducer, accuracyReducer } from '../features/stats/statsSlice';
+import {
+	settingsOpenedReducer,
+	testTypeReducer,
+} from '../features/settings/settingsSlice';
 
 export default configureStore({
 	reducer: {
@@ -14,5 +18,7 @@ export default configureStore({
 		typedCharacters: typedCharactersReducer,
 		wpm: wpmReducer,
 		accuracy: accuracyReducer,
+		settings: settingsOpenedReducer,
+		testType: testTypeReducer,
 	},
 });

@@ -108,7 +108,8 @@ main {
 }
 
 .typing-area,
-.letter {
+.letter,
+.words {
 	width: 100%;
 	font-size: $typing-area-size;
 }

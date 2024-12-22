@@ -1,12 +1,13 @@
 import Header from './components/Header';
-import Settings from './components/Settings';
+import Settings from './features/settings/Settings';
 import Main from './components/Main';
 import Finish from './components/Finish';
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 function App() {
-	const [settingsOpened, setSettingsOpened] = useState(false);
+	const settingsOpened = useSelector(
+		(state) => state.settings.settingsOpenedValue
+	);
 
 	const isTestFinished = useSelector(
 		(state) => state.timer.isTestFinishedValue
@@ -14,11 +15,9 @@ function App() {
 
 	return (
 		<>
-			<Header setSettingsOpened={setSettingsOpened} />
+			<Header />
 			<Main />
-			{settingsOpened && (
-				<Settings setSettingsOpened={setSettingsOpened} />
-			)}
+			{settingsOpened && <Settings />}
 			{isTestFinished && <Finish />}
 		</>
 	);

@@ -2,14 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTestTime, setCurrentTime } from '../features/timer/timerSlice';
 import { useRestartTest } from '../utils';
-
-// TODO: make settings work
-
-function SettingsIcon({ setSettingsOpened }) {
-	const handleClick = () => setSettingsOpened((prev) => !prev);
-
-	return <span className='settings-icon' onClick={handleClick}></span>;
-}
+import { setSettingsOpened } from '../features/settings/settingsSlice';
 
 function TestTimeButton({
 	duration,
@@ -39,13 +32,12 @@ function TestTimeButton({
 	);
 }
 
-function Header({ setSettingsOpened }) {
+function Header() {
 	const dispatch = useDispatch();
 	const isTestFinished = useSelector(
 		(state) => state.timer.isTestFinishedValue
 	);
 
-	// TODO: restart test after changing time
 	const times = [15, 30, 60, 120];
 	const [selectedButtonIndex, setSelectedButtonIndex] = useState(
 		JSON.parse(localStorage.getItem('selectedButtonIndex')) || 0
@@ -68,7 +60,9 @@ function Header({ setSettingsOpened }) {
 		<header className='container-column'>
 			<div className='home container'>
 				<h1 className='main-title'>Typing test</h1>
-				<SettingsIcon setSettingsOpened={setSettingsOpened} />
+				<span
+					className='settings-icon'
+					onClick={() => dispatch(setSettingsOpened(true))}></span>
 			</div>
 
 			<div className='button-list container'>

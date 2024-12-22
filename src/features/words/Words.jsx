@@ -6,6 +6,7 @@ import { setIsRunning, setIsTestFinished } from '../timer/timerSlice';
 
 export function Words() {
 	const words = useSelector((state) => state.words.wordsValue);
+	const wordCount = useSelector((state) => state.testType.wordCountValue);
 	const currentTime = useSelector((state) => state.timer.currentTimeValue);
 	const typedCharacters = useSelector(
 		(state) => state.typedCharacters.typedCharactersValue
@@ -29,7 +30,7 @@ export function Words() {
 
 	useEffect(() => {
 		if (!words || words.length === 0) {
-			dispatch(setWords(generateWords(50)));
+			dispatch(setWords(generateWords(wordCount)));
 		}
 	}, [words, dispatch]);
 

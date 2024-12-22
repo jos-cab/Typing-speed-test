@@ -49,7 +49,9 @@ export function Stats() {
 			setWPM(
 				elapsedTime > 0
 					? Math.trunc(
-							(typedLength / averageWordLength / elapsedTime) * 60
+							(typedLength / averageWordLength / elapsedTime) *
+								60 *
+								(accuracyValue / 100)
 					  )
 					: 0
 			)
@@ -66,7 +68,7 @@ export function Stats() {
 	return (
 		<div className='stats container'>
 			<Timer />
-			<span className='words-per-minute'>WPM: {wpm}</span>
+			<span className='words-per-minute'>WPM: {wpm || 0}</span>
 			<span className='accuracy'>ACC: {accuracy}%</span>
 		</div>
 	);

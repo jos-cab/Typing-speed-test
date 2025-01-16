@@ -72,23 +72,35 @@ export function Words() {
 	}, [typedCharacters, words]);
 
 	useEffect(() => {
+		// Calculate line lengths
+
 		const inputText = typingAreaRef.current.value;
 		const maxLineLength = wordListRef.current.offsetWidth;
 
 		const linesLengths = [];
+		const linesWordCounts = [];
 		let currentLineLength = 0;
 
+		let wordCount = 0;
 		words.forEach((word) => {
 			const wordLength = (word.length + 1) * 12;
 			if (currentLineLength + wordLength >= maxLineLength) {
 				linesLengths.push(currentLineLength - 12);
+				linesWordCounts.push(wordCount);
+				wordCount = 1;
 				currentLineLength = wordLength;
 			} else {
 				currentLineLength += wordLength;
+				wordCount++;
 			}
 		});
 
-		if (currentLineLength > 0) linesLengths.push(currentLineLength);
+		if (currentLineLength > 0) {
+			linesLengths.push(currentLineLength);
+			linesWordCounts.push(wordCount);
+		}
+
+		// Calculate carret position
 
 		let remainingLength = inputText.length * 12; // Caret position in pixels
 		let currentLine = 0;
@@ -101,6 +113,33 @@ export function Words() {
 			currentLine++;
 		}
 
+		if (currentLine === 2 && remainingLength === 0) {
+			console.log(linesWordCounts);
+			console.log(words);
+
+			console.log(linesWordCounts.slice(0, currentLine - 1));
+
+			const newWords = words.slice(
+				linesWordCounts
+					.slice(0, currentLine - 1)
+					.reduce((a, b) => a + b)
+			);
+
+			const newInputText = inputText.slice(
+				Math.floor(
+					linesLengths
+						.slice(0, currentLine - 1)
+						.reduce((a, b) => a + b, 0) / 12
+				)
+			);
+
+			dispatch(setWords(newWords));
+			dispatch(setTypedCharacters(newInputText));
+			console.log(typedCharacters);
+		}
+
+		// Animate carret while not typing
+
 		carretRef.current.style.top = `${currentLine * 1.63 + 0.1}em`;
 		carretRef.current.style.left = `${remainingLength}px`;
 		carretRef.current.style.animation = `none`;
@@ -112,7 +151,6 @@ export function Words() {
 		return () => clearTimeout(timeoutId);
 	}, [typedCharacters, words]);
 
-	// TODO: Generate words procedurally
 	useEffect(() => {
 		if (
 			words.length > 0 &&

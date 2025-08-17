@@ -18,7 +18,7 @@ Welcome to the **Typing Speed Test** app! This is a fun and interactive tool to 
 
 ## Demo
 
-Check out the app in action: [Typing Speed Test Demo](https://jos-cabrera.github.io/Typing-speed-test/)
+Check out the app in action: [Typing Speed Test Demo](https://jos-cab.github.io/Typing-speed-test/)
 
 ## What I Learned
 
@@ -42,4 +42,4 @@ This project is available under the MIT License. For details, check out the [LIC
 
 ---
 
-Built with ❤️ by [José Cabrera](https://github.com/jos-cabrera).
+Built with ❤️ by [José Cabrera](https://github.com/jos-cab).
